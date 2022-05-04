@@ -6,29 +6,132 @@
   <body>
     <nav></nav>   
     <main>
-      <h1>Apollo - Yacht Brokers Singapore</h1>
-      <section>
-        <h3>2022 Chapparal OS 280</h2>
-        <img src="apollo-yachts_2020_Chaparral_OSX_280.jpg">
-        <p>Full configured price = USD 261,490</p>
-        <p>Estimated Delivery Date = 14 November 2022</p>
-      </section>
 
-      <br/>
+        <section>
+            <h2>About</h2>
+            <p>
+                This example is for a ficticious yacht broker based in Singapore selling to people in Singapore with the manufacturer in the USA.
+                Typically the customer will have their money in Singapore Dollars and the manufacturer would need to be paid in US Dollars.
+                The customer would select their boat/yacht that they are interested in and then configure 
+                the accessories/colours etc and the site would give a full price and a delivery date.
+                Based on the total price and the delivery date, the brokers have chosen to include 2 OpenHedge widgets on their site.
+                The first widget shows a "spot" price for 10% of the deposit payment.
+                The second widget shows a "forward" price for remaining 90% of the balance due on the delivery date.
+            </p>
+        </section>
 
-      <section>
-        <h3>STEP 1 - To secure the build slot and delivery date, please pay a 10% deposit of USD 26,149 today</h3>
-        <iframe src="https://embed.v1.sandbox.openhedge.dev/widget-spot-buy-basic.html?buyCurrency=USD&buyAmount=26149&sellCurrency=SGD"  height="250"  width="   90%" style="border:0px;display: block;margin: 0 auto;" scrolling="no"></iframe>
-      </section>
+        <br/>
 
-      <br/>
+        <h1>Apollo - Yacht Brokers Singapore</h1>
+        <section>
+          <h3>2022 Chapparal OS 280</h3>
+          
+          <table>
+              <tr>
+                  <td rowspan="6"><img src="apollo-yachts_2020_Chaparral_OSX_280.jpg"></td>
+                  <td>Base Price</td>
+                  <td></td>
+                  <td><output id="yacht-base-price"></output></td>
+              </tr>
+              <tr>
+                <td>Accessory 1</td>
+                <td><input type="checkbox" id="yacht-accessory1-select" name="accessory1" onclick="accessorySelected()"  value="true"></td>
+                <td><output id="yacht-accessory1-price"></td>
+            </tr>
+            <tr>
+                <td>Accessory 2</td>
+                <td><input type="checkbox" id="yacht-accessory2-select"" name="accessory2" onclick="accessorySelected()"  value="true"></td>
+                <td><output id="yacht-accessory2-price"></td>
+            </tr>
+            <tr>
+                <td>Accessory 3</td>
+                <td><input type="checkbox" id="yacht-accessory3-select" name="accessory3" onclick="accessorySelected()"  value="true"></td>
+                <td><output id="yacht-accessory3-price"></td>
+            </tr>
+            <tr>
+                <td>Total Price</td>
+                <td></td>
+                <td><output id="yacht-total-price"></output></td>
+            </tr>
+            <tr>
+                <td>Delivery Date</td>
+                <td></td>
+                <td><output id="yacht-delivery-date"></output></td>
+            </tr>
+          </table>
+        </section>
 
-      <section>
-        <h3>STEP 2 - Pay the balancing 90% amount of USD 235,341 on the delivery date</h3>
-        <iframe src="https://embed.v1.sandbox.openhedge.dev/widget-forward-buy-single.html?buyCurrency=USD&buyAmount=235341&sellCurrency=SGD&settlementDate=2022-11-14"  height="300"  width="90%" style="border:0px;display: block;margin: 0 auto;" scrolling="no"></iframe>
-      </section>
+        <br/>
+
+        <section>
+          <h3>STEP 1 - To secure the build slot and delivery date, please pay a 10% deposit today: <output id="yacht-deposit"></output></h3>
+          <iframe id="yacht-spot" src="https://embed.v1.sandbox.openhedge.dev/widget-spot-buy-basic.html?buyCurrency=USD&buyAmount=26149&sellCurrency=SGD"  height="250"  width="90%" style="border:0px;display: block;margin: 0 auto;" scrolling="no"></iframe>
+        </section>
+
+        <br/>
+
+        <section>
+          <h3>STEP 2 - Pay the balancing 90% amount on the delivery date: <output id="yacht-balance"></output></h3>
+          <iframe id="yacht-forward" src="https://embed.v1.sandbox.openhedge.dev/widget-forward-buy-single.html?buyCurrency=USD&buyAmount=235341&sellCurrency=SGD&settlementDate=2022-11-14"  height="300"  width="90%" style="border:0px;display: block;margin: 0 auto;" scrolling="no"></iframe>
+        </section>
 
     </main>
   </body>  
   <script src="apollo.js"></script>
+  <script>
+
+    const yachtPriceBase       = 230000;
+    const yachtPriceAccessory1 = 12570;
+    const yachtPriceAccessory2 = 4500;
+    const yachtPriceAccessory3 = 1600;
+
+    function yachtInit()
+    {
+       document.getElementById("yacht-base-price").value = yachtPriceBase;
+       document.getElementById("yacht-accessory1-price").value = yachtPriceAccessory1;
+       document.getElementById("yacht-accessory2-price").value = yachtPriceAccessory2;
+       document.getElementById("yacht-accessory3-price").value = yachtPriceAccessory3;
+
+       accessorySelected();
+    }
+
+    function accessorySelected()
+    {
+         var deliveryDate = new Date();
+
+         var totalPrice = yachtPriceBase;
+         deliveryDate.setDate(deliveryDate.getDate() + 180);
+
+         if ( document.getElementById("yacht-accessory1-select").checked) { totalPrice += yachtPriceAccessory1 ; deliveryDate.setDate(deliveryDate.getDate() + 7);  }
+         if ( document.getElementById("yacht-accessory2-select").checked) { totalPrice += yachtPriceAccessory2 ; deliveryDate.setDate(deliveryDate.getDate() + 7); }
+         if ( document.getElementById("yacht-accessory3-select").checked) { totalPrice += yachtPriceAccessory3 ; deliveryDate.setDate(deliveryDate.getDate() + 7); }
+
+         console.log("Total Price = " + totalPrice); 
+         console.log("Delivery Date  = " + deliveryDate ); 
+
+         document.getElementById("yacht-total-price").value = totalPrice;
+         const printableDate = deliveryDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, '-');
+         document.getElementById("yacht-delivery-date").value = printableDate;
+
+
+
+
+        var amountDeposit = totalPrice * 0.1;
+        document.getElementById("yacht-deposit").value = amountDeposit;
+        var spotUrl = "https://embed.v1.sandbox.openhedge.dev/widget-spot-buy-basic.html?buyCurrency=" + "USD" + "&sellCurrency=" + "SGD" + "&buyAmount=" + amountDeposit;
+        document.getElementById('yacht-spot').src = spotUrl;
+
+        var amountBalance = totalPrice * 0.9;
+        const isoDate = deliveryDate.toISOString().split('T')[0]       
+        document.getElementById("yacht-balance").value = amountBalance;
+        forwardUrl = "https://embed.v1.sandbox.openhedge.dev/widget-forward-buy-single.html?buyCurrency=" + "USD" + "&sellCurrency=" + "SGD" + "&buyAmount=" + amountBalance + "&settlementDate=" + isoDate;
+        
+        document.getElementById('yacht-forward').src = forwardUrl;
+
+        document.getElementById('yacht-spot').contentWindow.location.reload();
+        document.getElementById('yacht-forward').contentWindow.location.reload();
+    }
+
+    yachtInit();
+  </script>
 </html>
