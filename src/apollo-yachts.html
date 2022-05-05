@@ -31,27 +31,27 @@
                   <td rowspan="6"><img src="apollo-yachts_2020_Chaparral_OSX_280.jpg"></td>
                   <td>Base Price</td>
                   <td></td>
-                  <td><output id="yacht-base-price"></output></td>
+                  <td class="amount"><output id="yacht-base-price"></output></td>
               </tr>
               <tr>
                 <td>Accessory 1</td>
                 <td><input type="checkbox" id="yacht-accessory1-select" name="accessory1" onclick="accessorySelected()"  value="true"></td>
-                <td><output id="yacht-accessory1-price"></td>
+                <td class="amount"><output id="yacht-accessory1-price"></output></td>
             </tr>
             <tr>
                 <td>Accessory 2</td>
                 <td><input type="checkbox" id="yacht-accessory2-select"" name="accessory2" onclick="accessorySelected()"  value="true"></td>
-                <td><output id="yacht-accessory2-price"></td>
+                <td class="amount"><output id="yacht-accessory2-price"></output></td>
             </tr>
             <tr>
                 <td>Accessory 3</td>
                 <td><input type="checkbox" id="yacht-accessory3-select" name="accessory3" onclick="accessorySelected()"  value="true"></td>
-                <td><output id="yacht-accessory3-price"></td>
+                <td class="amount"><output id="yacht-accessory3-price"></output></td>
             </tr>
             <tr>
                 <td>Total Price</td>
                 <td></td>
-                <td><output id="yacht-total-price"></output></td>
+                <td class="amount"><output id="yacht-total-price"><output></td>
             </tr>
             <tr>
                 <td>Delivery Date</td>
@@ -64,14 +64,14 @@
         <br/>
 
         <section>
-          <h3>STEP 1 - To secure the build slot and delivery date, please pay a 10% deposit today: <output id="yacht-deposit"></output></h3>
+          <h3>STEP 1 - To secure the build slot and delivery date, please pay a 10% deposit today: USD <output id="yacht-deposit"></output></h3>
           <iframe id="yacht-spot" src="https://embed.v1.sandbox.openhedge.dev/widget-spot-buy-basic.html?buyCurrency=USD&buyAmount=26149&sellCurrency=SGD"  height="250"  width="90%" style="border:0px;display: block;margin: 0 auto;" scrolling="no"></iframe>
         </section>
 
         <br/>
 
         <section>
-          <h3>STEP 2 - Pay the balancing 90% amount on the delivery date: <output id="yacht-balance"></output></h3>
+          <h3>STEP 2 - Pay the balancing 90% amount on the delivery date: USD <output id="yacht-balance"></output></h3>
           <iframe id="yacht-forward" src="https://embed.v1.sandbox.openhedge.dev/widget-forward-buy-single.html?buyCurrency=USD&buyAmount=235341&sellCurrency=SGD&settlementDate=2022-11-14"  height="300"  width="90%" style="border:0px;display: block;margin: 0 auto;" scrolling="no"></iframe>
         </section>
 
@@ -87,43 +87,38 @@
 
     function yachtInit()
     {
-       document.getElementById("yacht-base-price").value = yachtPriceBase;
-       document.getElementById("yacht-accessory1-price").value = yachtPriceAccessory1;
-       document.getElementById("yacht-accessory2-price").value = yachtPriceAccessory2;
-       document.getElementById("yacht-accessory3-price").value = yachtPriceAccessory3;
+       document.getElementById("yacht-base-price").value = WidgetFormatAmount(yachtPriceBase);
+       document.getElementById("yacht-accessory1-price").value = WidgetFormatAmount(yachtPriceAccessory1);
+       document.getElementById("yacht-accessory2-price").value = WidgetFormatAmount(yachtPriceAccessory2);
+       document.getElementById("yacht-accessory3-price").value = WidgetFormatAmount(yachtPriceAccessory3);
 
        accessorySelected();
     }
 
+
     function accessorySelected()
     {
-         var deliveryDate = new Date();
+        var deliveryDate = new Date();
 
-         var totalPrice = yachtPriceBase;
-         deliveryDate.setDate(deliveryDate.getDate() + 180);
+        var totalPrice = yachtPriceBase;
+        deliveryDate.setDate(deliveryDate.getDate() + 180);
 
-         if ( document.getElementById("yacht-accessory1-select").checked) { totalPrice += yachtPriceAccessory1 ; deliveryDate.setDate(deliveryDate.getDate() + 7);  }
-         if ( document.getElementById("yacht-accessory2-select").checked) { totalPrice += yachtPriceAccessory2 ; deliveryDate.setDate(deliveryDate.getDate() + 7); }
-         if ( document.getElementById("yacht-accessory3-select").checked) { totalPrice += yachtPriceAccessory3 ; deliveryDate.setDate(deliveryDate.getDate() + 7); }
+        if ( document.getElementById("yacht-accessory1-select").checked) { totalPrice += yachtPriceAccessory1 ; deliveryDate.setDate(deliveryDate.getDate() + 7); }
+        if ( document.getElementById("yacht-accessory2-select").checked) { totalPrice += yachtPriceAccessory2 ; deliveryDate.setDate(deliveryDate.getDate() + 7); }
+        if ( document.getElementById("yacht-accessory3-select").checked) { totalPrice += yachtPriceAccessory3 ; deliveryDate.setDate(deliveryDate.getDate() + 7); }
 
-         console.log("Total Price = " + totalPrice); 
-         console.log("Delivery Date  = " + deliveryDate ); 
-
-         document.getElementById("yacht-total-price").value = totalPrice;
-         const printableDate = deliveryDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, '-');
-         document.getElementById("yacht-delivery-date").value = printableDate;
-
-
-
+        document.getElementById("yacht-total-price").value = WidgetFormatAmount(totalPrice);
+        const printableDate = deliveryDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, '-');
+        document.getElementById("yacht-delivery-date").value = printableDate;
 
         var amountDeposit = totalPrice * 0.1;
-        document.getElementById("yacht-deposit").value = amountDeposit;
+        document.getElementById("yacht-deposit").value = WidgetFormatAmount(amountDeposit);
         var spotUrl = "https://embed.v1.sandbox.openhedge.dev/widget-spot-buy-basic.html?buyCurrency=" + "USD" + "&sellCurrency=" + "SGD" + "&buyAmount=" + amountDeposit;
         document.getElementById('yacht-spot').src = spotUrl;
 
         var amountBalance = totalPrice * 0.9;
         const isoDate = deliveryDate.toISOString().split('T')[0]       
-        document.getElementById("yacht-balance").value = amountBalance;
+        document.getElementById("yacht-balance").value = WidgetFormatAmount(amountBalance);
         forwardUrl = "https://embed.v1.sandbox.openhedge.dev/widget-forward-buy-single.html?buyCurrency=" + "USD" + "&sellCurrency=" + "SGD" + "&buyAmount=" + amountBalance + "&settlementDate=" + isoDate;
         
         document.getElementById('yacht-forward').src = forwardUrl;

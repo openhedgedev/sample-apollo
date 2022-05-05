@@ -16,3 +16,13 @@ function apollohedge_nav()
 
 apollohedge_nav();
 
+
+
+function WidgetFormatAmount( amount )
+{
+    return amount.toLocaleString(undefined, 
+    {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }); 
+}
