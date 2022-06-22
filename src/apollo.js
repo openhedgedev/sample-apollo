@@ -5,7 +5,8 @@ function apollohedge_nav()
       <a href="apollo-spot-buy-basic.html">Spot Buy</a>\
       <a href="apollo-spot-sell-basic.html">Spot Sell</a>\
       <a href="apollo-forward-buy-single.html">Forward Buy Single</a>\
-      <a href="apollo-forward-buy-6xmonths.html">Forward Buy 6xMonths</a>\
+      <a href="apollo-forward-sell-single.html">Forward Sell Single</a>\
+      <a href="apollo-forward-buy-strip.html">Forward Buy Strip</a>\
       <br>\
       <a href="apollo-payroll.html">Apollo Payroll</a>\
       <a href="apollo-cars.html">Apollo Cars</a>\

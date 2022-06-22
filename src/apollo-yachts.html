@@ -65,14 +65,14 @@
 
         <section>
           <h3>STEP 1 - To secure the build slot and delivery date, please pay a 10% deposit today: USD <output id="yacht-deposit"></output></h3>
-          <iframe id="yacht-spot" src="https://embed.v1.sandbox.openhedge.dev/widget-spot-buy-basic.html?buyCurrency=USD&buyAmount=26149&sellCurrency=SGD"  height="250"  width="90%" style="border:0px;display: block;margin: 0 auto;" scrolling="no"></iframe>
+          <iframe id="yacht-spot" src="https://embed.v1.sandbox.openhedge.dev/widget-spot-buy-basic.html?buyCurrency=USD&buyAmount=26149&sellCurrency=SGD&partnerId=8410d830-ff71-4f30-8079-d30e79e9ccbb"  height="250"  width="90%" style="border:0px;display: block;margin: 0 auto;" scrolling="no"></iframe>
         </section>
 
         <br/>
 
         <section>
           <h3>STEP 2 - Pay the balancing 90% amount on the delivery date: USD <output id="yacht-balance"></output></h3>
-          <iframe id="yacht-forward" src="https://embed.v1.sandbox.openhedge.dev/widget-forward-buy-single.html?buyCurrency=USD&buyAmount=235341&sellCurrency=SGD&settlementDate=2022-11-14"  height="300"  width="90%" style="border:0px;display: block;margin: 0 auto;" scrolling="no"></iframe>
+          <iframe id="yacht-forward" src="https://embed.v1.sandbox.openhedge.dev/widget-forward-buy-single.html?buyCurrency=USD&buyAmount=235341&sellCurrency=SGD&settlementDate=2022-11-14&partnerId=8410d830-ff71-4f30-8079-d30e79e9ccbb"  height="300"  width="90%" style="border:0px;display: block;margin: 0 auto;" scrolling="no"></iframe>
         </section>
 
     </main>
@@ -113,14 +113,14 @@
 
         var amountDeposit = totalPrice * 0.1;
         document.getElementById("yacht-deposit").value = WidgetFormatAmount(amountDeposit);
-        var spotUrl = "https://embed.v1.sandbox.openhedge.dev/widget-spot-buy-basic.html?buyCurrency=" + "USD" + "&sellCurrency=" + "SGD" + "&buyAmount=" + amountDeposit;
+        var spotUrl = "https://embed.v1.sandbox.openhedge.dev/widgets/spot-buy-basic.html?partnerId=8410d830-ff71-4f30-8079-d30e79e9ccbb&buyCurrency=" + "USD" + "&sellCurrency=" + "SGD" + "&buyAmount=" + amountDeposit;
         document.getElementById('yacht-spot').src = spotUrl;
 
         var amountBalance = totalPrice * 0.9;
         const isoDate = deliveryDate.toISOString().split('T')[0]       
         document.getElementById("yacht-balance").value = WidgetFormatAmount(amountBalance);
-        forwardUrl = "https://embed.v1.sandbox.openhedge.dev/widget-forward-buy-single.html?buyCurrency=" + "USD" + "&sellCurrency=" + "SGD" + "&buyAmount=" + amountBalance + "&settlementDate=" + isoDate;
-        
+        forwardUrl = "https://embed.v1.sandbox.openhedge.dev/widgets/forward-buy-single.html?partnerId=8410d830-ff71-4f30-8079-d30e79e9ccbb&buyCurrency=" + "USD" + "&sellCurrency=" + "SGD" + "&buyAmount=" + amountBalance + "&settlementDate=" + isoDate;
+
         document.getElementById('yacht-forward').src = forwardUrl;
 
         document.getElementById('yacht-spot').contentWindow.location.reload();
