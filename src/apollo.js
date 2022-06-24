@@ -11,6 +11,8 @@ function apollohedge_nav()
       <a href="apollo-payroll.html">Apollo Payroll</a>\
       <a href="apollo-cars.html">Apollo Cars</a>\
       <a href="apollo-yachts.html">Apollo Yachts</a>\
+      <br>\
+      <a href="mock-forecast1-view.html">Mock Forecast 1</a>\
     ';
     document.querySelector("nav").innerHTML = navhtml;
 }

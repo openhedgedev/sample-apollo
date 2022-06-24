@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>Apollo Cars</title>
+    <link href="apollo.css" rel="stylesheet">  
+    <link href="mock-forecast1-style.css" rel="stylesheet">  
+</head>
+  <body>
+    <nav></nav>   
+    <main>
+      <h1>Forecast</h1>
+
+      <table id="selection">
+        <tr>
+          <th>Currency</th>
+          <td>
+              <div class="choice-toolbar" id="choice-currencies">
+                  <input onchange="mockRefresh();" type="radio" value="GBP" name="currency" id="ccy-GBP" checked>  <label for="ccy-GBP">GBP</label>
+                  <input onchange="mockRefresh();" type="radio" value="EUR" name="currency" id="ccy-EUR">          <label for="ccy-EUR">EUR</label>
+                  <input onchange="mockRefresh();" type="radio" value="USD" name="currency" id="ccy-USD">          <label for="ccy-USD">USD</label>
+                  <input onchange="mockRefresh();" type="radio" value="SGD" name="currency" id="ccy-SGD">          <label for="ccy-SGD">SGD</label>
+              </div>
+          </td>
+        </tr>
+      </table>
+
+      <br/>
+
+      <table id="results">
+      </table>
+
+    </main>
+  </body>
+  <script src="apollo.js"></script>
+  <script src="mock-forecast1-data.js"></script>
+  <script src="mock-forecast1-logic.js"></script>
+</html>
