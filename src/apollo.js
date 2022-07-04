@@ -7,6 +7,7 @@ function apollohedge_nav()
       <a href="apollo-forward-buy-single.html">Forward Buy Single</a>\
       <a href="apollo-forward-sell-single.html">Forward Sell Single</a>\
       <a href="apollo-forward-buy-strip.html">Forward Buy Strip</a>\
+      <a href="apollo-forward-flow.html">Forward Flow</a>\
       <br>\
       <a href="apollo-payroll.html">Apollo Payroll</a>\
       <a href="apollo-cars.html">Apollo Cars</a>\
